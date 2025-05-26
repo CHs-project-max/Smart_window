@@ -1,5 +1,5 @@
-#define WIFI_SSID "Telstra1AA87A"
-#define WIFI_PASSWORD "rqp2vsnk44b7unk4"
+#define WIFI_SSID ""
+#define WIFI_PASSWORD ""
 #define MQTT_SERVER "7a753cf62ab34b578ab71f6952b72df2.s1.eu.hivemq.cloud"
 #define MQTT_PORT 8883
 #define MQTT_SUBTOPIC "RPi"
