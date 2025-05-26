@@ -1,4 +1,4 @@
-#define WIFI_SSID ""
+#define WIFI_SSID "" //replace with your own wifi credential
 #define WIFI_PASSWORD ""
 #define MQTT_SERVER "7a753cf62ab34b578ab71f6952b72df2.s1.eu.hivemq.cloud"
 #define MQTT_PORT 8883
