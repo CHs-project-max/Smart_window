@@ -3,7 +3,6 @@ import requests
 import time
 import speech_recognition as sr
 import paho.mqtt.client as Mqtt
-from paho import mqtt
 from datetime import datetime
 from secret import *
 
