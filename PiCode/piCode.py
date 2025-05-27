@@ -11,18 +11,18 @@ last_checked_hour = None
 stop_event = threading.Event()
 def dataextract():
     extracted = False
-    #if(datetime.now().hour == 0 and not extracted ):
-    respond = requests.get(url)
-    data = respond.json()
-    global rain_chance_list
-    rain_chance_list = data["hourly"]["precipitation_probability"]
-    global sunrise
-    sunrise = datetime.fromisoformat(data["daily"]["sunrise"][0]).hour
-    global sunset
-    sunset = datetime.fromisoformat(data["daily"]["sunset"][0]).hour
-    extracted = True
-    #elif(datetime.now().hour > 0 and extracted):
-    extracted = False
+    if(datetime.now().hour == 0 and not extracted ):
+        respond = requests.get(url)
+        data = respond.json()
+        global rain_chance_list
+        rain_chance_list = data["hourly"]["precipitation_probability"]
+        global sunrise
+        sunrise = datetime.fromisoformat(data["daily"]["sunrise"][0]).hour
+        global sunset
+        sunset = datetime.fromisoformat(data["daily"]["sunset"][0]).hour
+        extracted = True
+    elif(datetime.now().hour > 0 and extracted):
+        extracted = False
     time.sleep(3500)
 
 def Recognition():
@@ -75,18 +75,18 @@ try:
             hour = now.hour
             minute = now.minute
             print(hour)
-            #if (minute > 50 and minute <=59) and hour != last_checked_hour:
-            print(f"Running check at {now.strftime('%H:%M')}")
-            try:
-                rain_chance = rain_chance_list[hour + 1]
-                last_checked_hour = hour
-                if (rain_chance <= threshold) and ( hour > sunrise and hour < sunset):
-                    client.publish(topic, 'openwindow', 2, True)
-                elif (rain_chance > threshold) or (hour > sunset or hour < sunrise):
-                    client.publish(topic, 'closewindow', 2, True)
-            except:
-                print("can't publish the message")
-            time.sleep(5)
+            if (minute > 50 and minute <=59) and hour != last_checked_hour:
+                print(f"Running check at {now.strftime('%H:%M')}")
+                try:
+                    rain_chance = rain_chance_list[hour + 1]
+                    last_checked_hour = hour
+                    if (rain_chance <= threshold) and ( hour > sunrise and hour < sunset):
+                        client.publish(topic, 'openwindow', 2, True)
+                    elif (rain_chance > threshold) or (hour > sunset or hour < sunrise):
+                        client.publish(topic, 'closewindow', 2, True)
+                except:
+                    print("can't publish the message")
+            time.sleep(300)
 
 except KeyboardInterrupt:
         stop_event.set()
